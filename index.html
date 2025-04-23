@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>安全密码生成器</title>
+    <title>Sicherer Passwort-Generator</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -117,10 +117,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>安全密码生成器</h1>
+        <h1>Sicherer Passwort-Generator</h1>
         
         <div class="form-group">
-            <label for="password-length">密码长度: <span id="length-value">12</span></label>
+            <label for="password-length">Passwortlänge: <span id="length-value">12</span></label>
             <input type="range" id="password-length" min="4" max="32" value="12">
             <div class="strength-meter">
                 <div class="strength-bar" id="strength-bar"></div>
@@ -128,37 +128,37 @@
         </div>
         
         <div class="form-group">
-            <label>包含字符类型:</label>
+            <label>Zeichentypen einschließen:</label>
             <div class="checkbox-group">
                 <div class="checkbox-item">
                     <input type="checkbox" id="lowercase" checked>
-                    <label for="lowercase">小写字母 (a-z)</label>
+                    <label for="lowercase">Kleinbuchstaben (a-z)</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="uppercase" checked>
-                    <label for="uppercase">大写字母 (A-Z)</label>
+                    <label for="uppercase">Großbuchstaben (A-Z)</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="numbers" checked>
-                    <label for="numbers">数字 (0-9)</label>
+                    <label for="numbers">Zahlen (0-9)</label>
                 </div>
                 <div class="checkbox-item">
                     <input type="checkbox" id="symbols" checked>
-                    <label for="symbols">符号 (!@#$%^&*)</label>
+                    <label for="symbols">Sonderzeichen (!@#$%^&*)</label>
                 </div>
             </div>
         </div>
         
         <div class="form-group">
-            <label for="password-result">生成的密码:</label>
+            <label for="password-result">Generiertes Passwort:</label>
             <div class="result-container">
                 <input type="text" id="password-result" readonly>
-                <button id="copy-btn">复制</button>
+                <button id="copy-btn">Kopieren</button>
             </div>
-            <div class="copied-message" id="copied-message">密码已复制!</div>
+            <div class="copied-message" id="copied-message">Passwort kopiert!</div>
         </div>
         
-        <button id="generate-btn">生成密码</button>
+        <button id="generate-btn">Passwort generieren</button>
     </div>
 
     <script>
@@ -175,27 +175,27 @@
             const copiedMessage = document.getElementById('copied-message');
             const strengthBar = document.getElementById('strength-bar');
             
-            // 更新密码长度显示
+            // Passwortlänge aktualisieren
             lengthSlider.addEventListener('input', function() {
                 lengthValue.textContent = this.value;
                 updateStrengthMeter();
             });
             
-            // 字符类型复选框变化时更新强度计
+            // Stärkeanzeige aktualisieren bei Änderung der Checkboxen
             [lowercaseCheckbox, uppercaseCheckbox, numbersCheckbox, symbolsCheckbox].forEach(checkbox => {
                 checkbox.addEventListener('change', updateStrengthMeter);
             });
             
-            // 生成密码
+            // Passwort generieren
             generateBtn.addEventListener('click', generatePassword);
             
-            // 复制密码
+            // Passwort kopieren
             copyBtn.addEventListener('click', function() {
                 if (passwordResult.value) {
                     passwordResult.select();
                     document.execCommand('copy');
                     
-                    // 显示复制成功消息
+                    // Kopierbestätigung anzeigen
                     copiedMessage.style.opacity = '1';
                     setTimeout(() => {
                         copiedMessage.style.opacity = '0';
@@ -203,7 +203,7 @@
                 }
             });
             
-            // 初始生成一个密码
+            // Initial ein Passwort generieren
             generatePassword();
             
             function generatePassword() {
@@ -213,20 +213,20 @@
                 const includeNumbers = numbersCheckbox.checked;
                 const includeSymbols = symbolsCheckbox.checked;
                 
-                // 验证至少选择了一种字符类型
+                // Überprüfen, ob mindestens ein Zeichentyp ausgewählt wurde
                 if (!includeLower && !includeUpper && !includeNumbers && !includeSymbols) {
-                    alert('请至少选择一种字符类型!');
+                    alert('Bitte wählen Sie mindestens einen Zeichentyp aus!');
                     return;
                 }
                 
-                // 定义字符集
+                // Zeichensatz definieren
                 let charset = '';
                 if (includeLower) charset += 'abcdefghijklmnopqrstuvwxyz';
                 if (includeUpper) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 if (includeNumbers) charset += '0123456789';
                 if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
                 
-                // 生成密码
+                // Passwort generieren
                 let password = '';
                 for (let i = 0; i < length; i++) {
                     const randomIndex = Math.floor(Math.random() * charset.length);
@@ -244,15 +244,15 @@
                 const includeNumbers = numbersCheckbox.checked;
                 const includeSymbols = symbolsCheckbox.checked;
                 
-                // 计算密码强度
+                // Passwortstärke berechnen
                 let strength = 0;
                 
-                // 长度加分
+                // Länge
                 if (length >= 8) strength += 1;
                 if (length >= 12) strength += 1;
                 if (length >= 16) strength += 1;
                 
-                // 字符类型多样性加分
+                // Zeichenvielfalt
                 let charTypes = 0;
                 if (includeLower) charTypes++;
                 if (includeUpper) charTypes++;
@@ -263,19 +263,19 @@
                 if (charTypes >= 3) strength += 1;
                 if (charTypes >= 4) strength += 1;
                 
-                // 更新强度条
+                // Stärkeanzeige aktualisieren
                 let width = 0;
-                let color = '#e74c3c'; // 红色
+                let color = '#e74c3c'; // Rot
                 
                 if (strength <= 2) {
                     width = 33;
-                    color = '#e74c3c'; // 红色
+                    color = '#e74c3c'; // Rot
                 } else if (strength <= 4) {
                     width = 66;
-                    color = '#f39c12'; // 橙色
+                    color = '#f39c12'; // Orange
                 } else {
                     width = 100;
-                    color = '#2ecc71'; // 绿色
+                    color = '#2ecc71'; // Grün
                 }
                 
                 strengthBar.style.width = width + '%';
